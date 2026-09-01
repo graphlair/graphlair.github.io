@@ -1,9 +1,0 @@
-<!doctype html>
-<html><head><meta charset="utf-8"><script>
-  sessionStorage.setItem('graphlair_redirect', location.pathname + location.search + location.hash);
-  var parts = location.pathname.split('/').filter(Boolean);
-  // For a custom domain, root is '/'. For username.github.io/repo, set GRAPHLAIR_REPO to repo name below.
-  var repo = ''; // e.g. 'graphlair' if deployed at username.github.io/graphlair
-  var base = repo ? '/' + repo + '/' : '/';
-  location.replace(base);
-</script></head><body></body></html>
