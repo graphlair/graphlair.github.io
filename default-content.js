@@ -557,7 +557,7 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
         "initials": "NT",
         "code": "GL / 01 / FOUNDER",
         "image": "",
-        "link": ""
+        "link": "/nafis/"
       },
       {
         "name": "Tawhidul Islam Taj",
@@ -566,7 +566,7 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
         "initials": "TT",
         "code": "GL / 02 / CHAIRMAN",
         "image": "",
-        "link": ""
+        "link": "/tawhid-taj/"
       },
       {
         "name": "Alimul Firoz",
@@ -575,7 +575,7 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
         "initials": "AF",
         "code": "GL / 03 / PEOPLE",
         "image": "",
-        "link": ""
+        "link": "/alimul-firoz/"
       },
       {
         "name": "Shuria Akter Shimu",
@@ -584,7 +584,7 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
         "initials": "SS",
         "code": "GL / 04 / CREATIVE",
         "image": "",
-        "link": ""
+        "link": "/shuria-shimu/"
       },
       {
         "name": "Tanjum Nahar Maria",
@@ -593,7 +593,7 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
         "initials": "TM",
         "code": "GL / 05 / GROWTH",
         "image": "",
-        "link": ""
+        "link": "/marian-tanjum/"
       },
       {
         "name": "Faiza Naba",
@@ -602,7 +602,7 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
         "initials": "FN",
         "code": "GL / 06 / ADVISORY",
         "image": "",
-        "link": ""
+        "link": "/faiza/"
       }
     ]
   },
