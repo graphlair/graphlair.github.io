@@ -44,6 +44,25 @@
 
   function nl2br(v='') { return esc(v).replace(/\n/g, '<br>'); }
 
+  function defaultMemberLink(name='') {
+    const known = {
+      'Nafis Tamim':'/nafis/',
+      'Tawhidul Islam Taj':'/tawhid-taj/',
+      'Alimul Firoz':'/alimul-firoz/',
+      'Shuria Akter Shimu':'/shuria-shimu/',
+      'Tanjum Nahar Maria':'/marian-tanjum/',
+      'Faiza Naba':'/faiza/'
+    };
+    if (known[name]) return known[name];
+    const slug = String(name || '')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-+|-+$/g,'');
+    return slug ? `/${slug}/` : '';
+  }
+
+
   async function loadContent() {
     const mergedDefault = clone(DEFAULTS);
     try {
@@ -267,7 +286,7 @@
     const h=$('.section-head h2',sec); if(h) h.innerHTML=nl2br(d.title||'');
     const grid=$('.team-grid',sec);
     if(grid) grid.innerHTML=(d.members||[]).map(x=>{
-      const img=imageUrl(x.image); const href=safeUrl(x.link,''); const tag=href?'a':'article';
+      const img=imageUrl(x.image); const href=safeUrl(x.link || defaultMemberLink(x.name),''); const tag=href?'a':'article';
       const media=img?`<img class="member-photo" src="${esc(img)}" alt="${esc(x.name||'Team member')}">`:`<div class="member-id">${esc(x.initials||'')}</div>`;
       return `<${tag} class="member reveal hover" data-label="VIEW" ${href?`href="${esc(href)}"`:''}><div class="member-visual"><span class="member-code">${esc(x.code||'')}</span>${media}</div><div class="member-info"><small>${esc(x.role||'')}</small><h3>${esc(x.name||'')}</h3><p>${esc(x.bio||'')}</p></div></${tag}>`;
     }).join('');
