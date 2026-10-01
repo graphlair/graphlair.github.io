@@ -35,6 +35,16 @@
     return fallback;
   }
 
+
+  function memberProfileUrl(member={}) {
+    const raw = String(member.link || '').trim();
+    if (raw && raw !== '#' && !/^javascript:/i.test(raw)) {
+      const custom = safeUrl(raw, '');
+      if (custom) return custom;
+    }
+    return defaultMemberLink(member.name);
+  }
+
   function imageUrl(v='') {
     const s = String(v || '').trim();
     if (!s) return '';
@@ -286,9 +296,9 @@
     const h=$('.section-head h2',sec); if(h) h.innerHTML=nl2br(d.title||'');
     const grid=$('.team-grid',sec);
     if(grid) grid.innerHTML=(d.members||[]).map(x=>{
-      const img=imageUrl(x.image); const href=safeUrl(x.link || defaultMemberLink(x.name),''); const tag=href?'a':'article';
+      const img=imageUrl(x.image); const href=memberProfileUrl(x); const tag=href?'a':'article';
       const media=img?`<img class="member-photo" src="${esc(img)}" alt="${esc(x.name||'Team member')}">`:`<div class="member-id">${esc(x.initials||'')}</div>`;
-      return `<${tag} class="member reveal hover" data-label="VIEW" ${href?`href="${esc(href)}"`:''}><div class="member-visual"><span class="member-code">${esc(x.code||'')}</span>${media}</div><div class="member-info"><small>${esc(x.role||'')}</small><h3>${esc(x.name||'')}</h3><p>${esc(x.bio||'')}</p></div></${tag}>`;
+      return `<${tag} class="member reveal hover" data-label="VIEW" ${href?`href="${esc(href)}" data-member-href="${esc(href)}"`:''}><div class="member-visual"><span class="member-code">${esc(x.code||'')}</span>${media}</div><div class="member-info"><small>${esc(x.role||'')}</small><h3>${esc(x.name||'')}</h3><p>${esc(x.bio||'')}</p></div></${tag}>`;
     }).join('');
   }
 
@@ -373,7 +383,19 @@
     const cursor=$('#cursor'), dot=$('#cursorDot'); if(!cursor||!dot) return;
     let mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my;
     addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
-    (function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cursor.style.left=cx+'px';cursor.style.top=cy+'px';dot.style.left=mx+'px';dot.style.top=my+'px';requestAnimationFrame(loop)})();
+    (function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cursor.style.left=cx+'px';cursor.style.top=cy+'px';dot.style.left=mx+'px';dot.style.top=my+'px';requestAnimationFrame(loop)
+  // Team-card navigation fallback
+  document.addEventListener('click', (e) => {
+    const card = e.target.closest('.team-grid .member[data-member-href]');
+    if (!card) return;
+    const href = card.getAttribute('data-member-href');
+    if (!href || href === '#') return;
+    if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button === 1) return;
+    e.preventDefault();
+    window.location.href = href;
+  });
+
+})();
     $$('a,.hover,.member,.case-media,.poster-swatch').forEach(el=>{el.addEventListener('mouseenter',()=>{cursor.classList.add('hot');cursor.dataset.label=el.dataset.label||''});el.addEventListener('mouseleave',()=>{cursor.classList.remove('hot');cursor.dataset.label=''})});
     $$('.magnetic').forEach(el=>{el.addEventListener('mousemove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.1}px,${(e.clientY-r.top-r.height/2)*.1}px)`});el.addEventListener('mouseleave',()=>el.style.transform='')});
   }
