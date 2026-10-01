@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /lair-vault/
+
+Sitemap: https://graphlair.github.io/sitemap.xml
