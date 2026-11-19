@@ -31,7 +31,26 @@ $$('.mr').forEach(r=>{r.replaceChildren(...Array.from({length:4},()=>lines(l.mar
 if(!l.heroVisible)$('#stage').hidden=true;if(!l.marqueeVisible) $('.mq').hidden=true;
 heading('#awards',l.awardsTitle);text($('#awards .lead'),l.awardsIntro);
 const aw=$('.awd');aw.replaceChildren();(c.awards?.items||[]).forEach((x,i)=>{let a=node('article');a.style.setProperty('--k',i%5);a.append(node('i','sh'));let im=photo(x.image,x.title);{let svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 64 64');let use=document.createElementNS(svg.namespaceURI,'use');use.setAttribute('href','#t'+(i%3+1));svg.append(use);a.append(svg)}if(im){im.className='award-image';a.append(im)}let info=node('div','award-info');info.append(node('small','d',String(i+1).padStart(2,'0')),node('h5','',x.title));if(x.category)info.append(node('p','',x.category));if(x.description)info.append(node('p','',x.description));if(x.link&&x.link!=='#'&&!x.link.startsWith('#'))info.append(link(l.awardLinkLabel,x.link));let y=node('span','yr d',x.year);y.dataset.n=x.year;a.append(info,y);aw.append(a)});
-heading('#work',l.workTitle);let wk=$('.wk');wk.replaceChildren();(c.projects?.items||[]).forEach(x=>{let li=node('li'),a=link('',x.link&&x.link!=='#'?x.link:'#contact'),h=node('h4','d',x.title),span=node('span','',x.tags);a.append(h,span);if(x.description||x.image){let details=node('details','project-detail');let summ=node('summary','',l.projectDetailsLabel);details.append(summ);if(x.description)details.append(node('p','',x.description));let img=photo(x.image,x.title);if(img){img.className='project-image';details.append(img)}li.append(a,details)}else li.append(a);wk.append(li)});
+heading('#work',l.workTitle);const wk=$('.wk');wk.replaceChildren();
+(c.projects?.items||[]).forEach((x,i)=>{
+ const li=node('li','project-item'),id='project-details-'+i;
+ const row=link('','#'+id,'project-row'),title=node('h4','d',x.title),tags=node('span','',x.tags);
+ row.append(title,tags);row.setAttribute('aria-controls',id);row.setAttribute('aria-expanded','false');
+ const toggle=node('button','project-toggle');toggle.type='button';toggle.setAttribute('aria-controls',id);toggle.setAttribute('aria-expanded','false');
+ const label=node('span','project-toggle-label',l.projectDetailsLabel||'Project details'),arrow=node('span','project-chevron','+');arrow.setAttribute('aria-hidden','true');toggle.append(label,arrow);
+ const panel=node('div','project-panel');panel.id=id;panel.hidden=true;
+ if(x.eyebrow)panel.append(node('div','project-eyebrow d',x.eyebrow));
+ const img=photo(x.image,x.title);
+ if(img){img.className='project-image';panel.append(img)}
+ if(x.description)panel.append(node('p','project-description',x.description));
+ const custom=String(x.link||'').trim();
+ if(custom&&custom!=='#'&&!custom.startsWith('#')){const target=safe(custom,'');if(target)panel.append(link('View project ↗',target,'project-external'))}
+ else if(custom.startsWith('#')&&custom.length>1&&document.getElementById(custom.slice(1)))panel.append(link('View project ↗',custom,'project-external'));
+ if(!x.description&&!img&&!panel.querySelector('.project-external'))panel.append(node('p','project-description','Project details have not been added yet.'));
+ function setOpen(open){panel.hidden=!open;row.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-expanded',String(open));arrow.textContent=open?'−':'+';li.classList.toggle('project-open',open)}
+ row.addEventListener('click',e=>{e.preventDefault();setOpen(panel.hidden)});toggle.addEventListener('click',()=>setOpen(panel.hidden));
+ li.append(row,toggle,panel);wk.append(li);
+});
 heading('#clients',l.clientsTitle);text($('#clients .lead'),l.clientsIntro);const cl=$('#cl');cl.replaceChildren();(c.clients?.items||[]).forEach((x,i)=>{let a=node('div');a.style.setProperty('--k',i%4+Math.floor(i/4));let im=photo(x.logo,x.name);if(im)a.append(im);a.append(node('b','d',x.name));if(x.category)a.append(node('small','',x.category));if(x.description)a.append(node('p','',x.description));if(x.link&&x.link!=='#'&&!x.link.startsWith('#'))a.append(link(l.clientLinkLabel,x.link));cl.append(a)});
 heading('#team',l.teamTitle);text($('#team .lead'),l.teamIntro);
 const tm=$('#tm');tm.replaceChildren();const cards=[];(c.team?.members||[]).forEach((m,i)=>{let t=node('article','tp'+(i?'':' on'));t.tabIndex=0;const initials=m.initials||String(m.name||'').split(' ').map(x=>x[0]).slice(0,2).join('');let svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 400 500');svg.innerHTML='<rect width="400" height="500" fill="#0a0a0a"/><path d="M36 500V150Q36 70 116 70H350" stroke="#fff" stroke-width="40" fill="none"/><g transform="translate(30 0) skewX(-10)"><rect x="190" y="170" width="120" height="330" fill="#99ff1f"/></g><text x="230" y="470" fill="#fff" font-family="Michroma,Arial" font-size="80"></text>';const skew=[-14,-6,8,16,-22,4][i%6];svg.querySelector('g').setAttribute('transform','translate('+(-skew*4)+' 0) skewX('+skew+')');svg.querySelector('text').style.mixBlendMode='difference';svg.querySelector('text').textContent=initials;let ph=node('div','ph');let img=photo(m.image,m.name);if(img){ph.append(img);img.style.cssText='width:100%;height:100%;object-fit:cover;object-position:center 20%';t.classList.add('has')}
