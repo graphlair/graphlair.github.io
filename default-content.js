@@ -729,6 +729,14 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
 window.GRAPHLAIR_DEFAULT_CONTENT.layout = {
   "navigation": [
     {
+      "label": "Home",
+      "href": "#stage"
+    },
+    {
+      "label": "Services",
+      "href": "#services"
+    },
+    {
       "label": "Awards & Recognition",
       "href": "#awards"
     },
@@ -743,6 +751,10 @@ window.GRAPHLAIR_DEFAULT_CONTENT.layout = {
     {
       "label": "Team",
       "href": "#team"
+    },
+    {
+      "label": "Contact",
+      "href": "#contact"
     }
   ],
   "navCta": {
@@ -832,7 +844,11 @@ window.GRAPHLAIR_DEFAULT_CONTENT.layout = {
     "subtitle": "Creative + technology studio",
     "phoneTitle": "Graphlair",
     "phoneText": "New idea unlocked",
-    "cardLabel": "EXPLORE"
+    "cardLabel": "EXPLORE",
+    "menu": "File\nEdit\nView\nWindow",
+    "clock": "Thu 19 Nov   9:41",
+    "phoneClock": "9:41",
+    "phoneDate": "Thursday, 19 November"
   },
   "awardsTitle": "Awards & Recognition.",
   "awardsIntro": "Recognitions and milestones from the lair.",
@@ -864,6 +880,14 @@ window.GRAPHLAIR_DEFAULT_CONTENT.layout = {
     "fallback": "I can help with services, pricing enquiries and starting a project. For anything else, use the project enquiry form.",
     "rules": [
       {
+        "keywords": "সেবা,কি করেন,কি কাজ",
+        "reply": "Graphlair branding, website, UI/UX, motion ও creative technology নিয়ে কাজ করে। নতুন কাজ শুরু করতে Start a project ফর্মটি পূরণ করুন।"
+      },
+      {
+        "keywords": "দাম,খরচ,বাজেট",
+        "reply": "প্রজেক্টের scope ও সময়ের ওপর খরচ নির্ভর করে। quotation পেতে Start a project ফর্মটি পূরণ করুন।"
+      },
+      {
         "keywords": "hello,hi,hey,হ্যালো",
         "reply": "Hello! How can I help you with Graphlair today?"
       },
@@ -887,6 +911,13 @@ window.GRAPHLAIR_DEFAULT_CONTENT.layout = {
         "keywords": "contact,project,hire,start,email",
         "reply": "Use the Start a project form. Your enquiry goes directly to Graphlair’s team."
       }
-    ]
-  }
+    ],
+    "avatar": "G"
+  },
+  "projectDetailsLabel": "Project details",
+  "clientLinkLabel": "Visit ↗",
+  "awardLinkLabel": "View recognition ↗",
+  "sendingLabel": "Sending…",
+  "menuLabel": "Menu ☰"
 };
+window.GraphlairNormalize=function(c){const R={"Nafis Tamim":"Sets the studio’s direction and the standard each project is held to\nConnects creative ideas with the technology that delivers them","Tawhidul Islam Taj":"Guides the long-term direction of Graphlair\nOversees how the organisation grows and governs itself","Alimul Firoz":"Builds the team and the culture it works in\nKeeps studio operations running smoothly","Shuria Akter Shimu":"Leads the visual language across every project\nShapes the story each brand tells","Tanjum Nahar Maria":"Plans how Graphlair and its clients reach their audience\nLeads communication and growth","Faiza Naba":"Brings a younger audience’s view into creative decisions\nAdvises the studio on what the next generation responds to"};for(const m of (c.team?.members||[])){if(m.responsibilities===undefined)m.responsibilities=R[m.name]||'';}return c;};

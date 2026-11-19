@@ -51,7 +51,7 @@
         .eq('id', cfg.CONTENT_ROW_ID || 'main')
         .maybeSingle();
       if (error) throw error;
-      return deepMerge(base, data?.content || {});
+      return window.GraphlairNormalize(deepMerge(base, data?.content || {}));
     } catch (err) {
       console.warn('[Graphlair member profile] using defaults:', err?.message || err);
       return base;
