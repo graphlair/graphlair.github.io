@@ -10,7 +10,7 @@
   const esc = (v='') => String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
   let content = clone(DEFAULTS);
-  let activeTab = 'site';
+  let activeTab = 'layout';
   let dirty = false;
   let currentUser = null;
 
@@ -30,9 +30,7 @@
   function getArray(path){ const a=getPath(path); return Array.isArray(a)?a:[]; }
   function getParentArray(path){ const parts=pathParts(path); const idx=parts.pop(); let o=content; parts.forEach(p=>o=o[p]); return {arr:o,idx}; }
 
-  const tabs=[
-    ['site','Site + SEO'],['navigation','Navigation'],['home','Home'],['poster','Poster Lab'],['impact','Numbers + Graph'],['projects','Projects'],['network','Global Network'],['awards','Awards'],['team','Team'],['clients','Clients'],['testimonials','Testimonials'],['contact','Contact + Footer'],['sections','Sections'],['messages','Messages'],['advanced','Advanced JSON']
-  ];
+  const tabs=[['layout','Layout + Brand'],['navigation','Navigation'],['chapters','3D Hero'],['projects','Projects'],['awards','Awards'],['team','Team'],['clients','Clients'],['contact','Contact + Footer'],['sections','Sections'],['assistant','Assistant'],['messages','Project Enquiries'],['advanced','Advanced JSON']];
 
   const tabHelp={
     site:'Page title, SEO and Graphlair brand colour.',navigation:'Menu names and links.',home:'Loader, hero text, buttons and manifesto.',poster:'Every poster word, palette and shape.',impact:'Animated counters and growing graph.',projects:'Highlighted projects, links and images.',network:'Country names, curved lines, hub and decorative shapes.',awards:'Awards and recognition rows.',team:'Team names, roles, bios, photos and links.',clients:'Client names, logos and links.',testimonials:'Client quotes.',contact:'Contact information, form text and footer.',sections:'Show, hide and reorder page sections.',messages:'Messages submitted through the public contact form.',advanced:'Full CMS JSON. Backup or edit everything at once.'
@@ -40,6 +38,10 @@
 
   const templates={
     navigation:{label:'New link',href:'#'},
+    'layout.navigation':{label:'New link',href:'#'},
+    'layout.sections':{id:'custom',label:'Custom',visible:true},
+    'layout.customSections':{id:'new-section',title:'New section',body:'',image:'',linkLabel:'',link:''},
+    'layout.assistant.rules':{keywords:'',reply:''},
     'hero.titleLines':{text:'NEW LINE',accent:false},
     'poster.palettes':{id:'new',label:'NEW',accent:'#98FC1C',accent2:'#C5FF77',bg:'#090909',fg:'#F5F5EF',glow:'rgba(152,252,28,.20)'},
     'poster.shapes':{type:'rect',x:50,y:50,width:15,height:10,rotate:0,filled:true,borderWidth:0,opacity:1},
@@ -109,11 +111,11 @@
 
   function renderNetwork(){return `<div class="panel-head"><div><h2>Global Network</h2><p>${tabHelp.network}</p></div></div><div class="notice">X/Y are percentages inside the network box. Curve X/Y control the bend of each line. Change them and save — no SVG coding needed.</div><div class="card"><div class="grid2">${input('network.eyebrow','Eyebrow')}${input('network.titleLine1','Title line')}${input('network.titleAccent','Accent title')}${input('network.description','Description','textarea')}${input('network.note','Note','textarea')}${input('network.hub.title','Hub title')}${input('network.hub.subtitle','Hub subtitle')}${input('network.hub.x','Hub X %','number')}${input('network.hub.y','Hub Y %','number')}</div></div><div class="card">${arrayEditor('network.countries','Countries + curved lines',[{key:'name',label:'Country name'},{key:'index',label:'Index'},{key:'x',label:'End X %',type:'number'},{key:'y',label:'End Y %',type:'number'},{key:'curveX',label:'Curve X %',type:'number'},{key:'curveY',label:'Curve Y %',type:'number'},{key:'color',label:'Marker colour',type:'color'},{key:'lineColor',label:'Line CSS colour'},{key:'animated',label:'Moving dot',type:'checkbox'}],x=>x.name)}</div><div class="card">${arrayEditor('network.shapes','Decorative shapes',[{key:'type',label:'Type',type:'select',options:[{value:'circle',label:'Circle'},{value:'rect',label:'Rectangle'},{value:'cross',label:'Cross'}]},{key:'x',label:'X %',type:'number'},{key:'y',label:'Y %',type:'number'},{key:'width',label:'Width %',type:'number'},{key:'height',label:'Height %',type:'number'},{key:'rotation',label:'Rotation',type:'number'},{key:'color',label:'Colour',type:'color'},{key:'opacity',label:'Opacity',type:'number',step:.05,min:0,max:1},{key:'filled',label:'Filled',type:'checkbox'},{key:'borderWidth',label:'Border width',type:'number'}],(_,i)=>`Shape ${i+1}`)}</div>`}
 
-  function renderAwards(){return `<div class="panel-head"><div><h2>Awards</h2><p>${tabHelp.awards}</p></div></div><div class="card"><div class="grid2">${input('awards.eyebrow','Eyebrow')}${input('awards.title','Title')}</div></div><div class="card">${arrayEditor('awards.items','Recognition',[{key:'year',label:'Year'},{key:'title',label:'Title'},{key:'category',label:'Category'},{key:'link',label:'Link'},{key:'image',label:'Image',type:'image'}],x=>x.title)}</div>`}
+  function renderAwards(){return `<div class="panel-head"><div><h2>Awards</h2><p>${tabHelp.awards}</p></div></div><div class="card"><div class="grid2">${input('awards.eyebrow','Eyebrow')}${input('awards.title','Title')}</div></div><div class="card">${arrayEditor('awards.items','Recognition',[{key:'year',label:'Year'},{key:'title',label:'Title'},{key:'category',label:'Category'},{key:'link',label:'Link'},{key:'image',label:'Image',type:'image'},{key:'description',label:'Details',type:'textarea'}],x=>x.title)}</div>`}
 
-  function renderTeam(){return `<div class="panel-head"><div><h2>Team</h2><p>${tabHelp.team}</p></div></div><div class="card"><div class="grid2">${input('team.eyebrow','Eyebrow')}${input('team.title','Title','textarea')}</div></div><div class="card">${arrayEditor('team.members','Team members',[{key:'name',label:'Name'},{key:'role',label:'Role'},{key:'bio',label:'Bio',type:'textarea'},{key:'initials',label:'Initials'},{key:'code',label:'Small code'},{key:'image',label:'Photo',type:'image'},{key:'link',label:'Profile link'}],x=>x.name)}</div>`}
+  function renderTeam(){return `<div class="panel-head"><div><h2>Team</h2><p>${tabHelp.team}</p></div></div><div class="card"><div class="grid2">${input('team.eyebrow','Eyebrow')}${input('team.title','Title','textarea')}</div></div><div class="card">${arrayEditor('team.members','Team members',[{key:'name',label:'Name'},{key:'role',label:'Role'},{key:'bio',label:'Bio',type:'textarea'},{key:'initials',label:'Initials'},{key:'code',label:'Small code'},{key:'image',label:'Photo',type:'image'},{key:'link',label:'Profile link (blank for automatic)'},{key:'responsibilities',label:'Responsibilities (one per line)',type:'textarea'},{key:'fullBio',label:'Full profile biography',type:'textarea'},{key:'website',label:'Website link'},{key:'linkedin',label:'LinkedIn link'},{key:'github',label:'GitHub link'}],x=>x.name)}</div>`}
 
-  function renderClients(){return `<div class="panel-head"><div><h2>Clients</h2><p>${tabHelp.clients}</p></div></div><div class="card">${arrayEditor('clients.items','Clients / partners',[{key:'name',label:'Name'},{key:'logo',label:'Logo',type:'image'},{key:'link',label:'Link'}],x=>x.name)}</div>`}
+  function renderClients(){return `<div class="panel-head"><div><h2>Clients</h2><p>${tabHelp.clients}</p></div></div><div class="card">${arrayEditor('clients.items','Clients / partners',[{key:'name',label:'Name'},{key:'logo',label:'Logo',type:'image'},{key:'link',label:'Link'},{key:'category',label:'Service / category'},{key:'description',label:'Client details',type:'textarea'}],x=>x.name)}</div>`}
 
   function renderTestimonials(){return `<div class="panel-head"><div><h2>Testimonials</h2><p>${tabHelp.testimonials}</p></div></div><div class="card"><div class="grid2">${input('testimonials.eyebrow','Eyebrow')}${input('testimonials.title','Title')}</div></div><div class="card">${arrayEditor('testimonials.items','Quotes',[{key:'quote',label:'Quote',type:'textarea'},{key:'name',label:'Name'},{key:'roleCompany',label:'Role / Company'}],x=>x.name)}</div>`}
 
@@ -128,7 +130,15 @@
     await loadMessages();
   }
 
-  const renderers={site:renderSite,navigation:renderNavigation,home:renderHome,poster:renderPoster,impact:renderImpact,projects:renderProjects,network:renderNetwork,awards:renderAwards,team:renderTeam,clients:renderClients,testimonials:renderTestimonials,contact:renderContact,sections:renderSections,advanced:renderAdvanced};
+  
+  function group(title,keys){return '<div class="card"><div class="card-title"><h3>'+esc(title)+'</h3></div><div class="grid2">'+keys.map(x=>input('layout.'+x[0],x[1],x[2]||'text')).join('')+'</div></div>'}
+  function renderLayoutV2(){return group('Brand (SEO and favicon unchanged)',[['brandMain','Brand first part'],['brandAccent','Brand second part'],['headerLogo','Optional header logo','image'],['accent','Accent colour','color'],['loaderText','Loader text'],['heroVisible','Show 3D hero','checkbox'],['marqueeVisible','Show marquee','checkbox'],['marquee','Marquee words, one per line','textarea']])+group('Public section headings',[['awardsTitle','Awards heading'],['awardsIntro','Awards intro','textarea'],['workTitle','Work heading'],['clientsTitle','Clients heading'],['clientsIntro','Clients intro','textarea'],['teamTitle','Team heading'],['teamIntro','Team intro','textarea'],['profileLabel','Profile button label']])}
+  function renderNavV2(){return group('Navigation CTA',[['navCta.label','Label'],['navCta.href','Link']])+'<div class="card">'+arrayEditor('layout.navigation','Public menu items',[{key:'label',label:'Label'},{key:'href',label:'Link (section #id or URL)'}],x=>x.label)+'</div>'}
+  function renderChaptersV2(){return Array.from({length:6},(_,i)=>group('3D chapter '+(i+1),[['chapters.'+i+'.title','Title'],['chapters.'+i+'.description','Description','textarea'],['chapters.'+i+'.items','Bullet items, one per line','textarea'],['chapters.'+i+'.cardSubtitle','3D card subtitle'],['chapters.'+i+'.primaryLabel','Primary button label'],['chapters.'+i+'.primaryLink','Primary link'],['chapters.'+i+'.secondaryLabel','Secondary button label'],['chapters.'+i+'.secondaryLink','Secondary link']])).join('')+group('3D screen copy',[['screen.top','Menu brand'],['screen.line1','Screen line one'],['screen.line2','Screen line two'],['screen.subtitle','Screen subheading'],['screen.phoneTitle','Phone title'],['screen.phoneText','Phone message'],['screen.cardLabel','Service card label']])}
+  function renderContactV2(){return group('Project enquiry form',[['contactTitle','Contact heading'],['formTitle','Form heading'],['nameLabel','Name label'],['emailLabel','Email label'],['companyLabel','Company label'],['messageLabel','Message label'],['submitLabel','Submit label'],['successMessage','Success message'],['errorMessage','Error message'],['footerLeft','Footer text'],['footerRight','Copyright']])}
+  function renderSectionsV2(){return '<div class="notice">Built-in IDs: awards, work, clients, team, contact. Add a custom section below, then add its unique ID into Section order to place it. Delete or hide a built-in section here; restore by adding its ID. Custom IDs must start with a letter and contain only lowercase letters, digits and hyphens. Add a matching menu link in Navigation.</div><div class="card">'+arrayEditor('layout.sections','Section order',[{key:'id',label:'Section ID'},{key:'label',label:'Admin label'},{key:'visible',label:'Visible',type:'checkbox'}],x=>x.label||x.id)+'</div><div class="card">'+arrayEditor('layout.customSections','Custom sections',[{key:'id',label:'Unique ID'},{key:'title',label:'Title'},{key:'body',label:'Body',type:'textarea'},{key:'image',label:'Image',type:'image'},{key:'linkLabel',label:'Button label'},{key:'link',label:'Button link'}],x=>x.title)+'</div>'}
+  function renderAssistantV2(){return group('Automated FAQ assistant',[['assistant.label','Floating button'],['assistant.name','Name'],['assistant.status','Status'],['assistant.greeting','Greeting','textarea'],['assistant.placeholder','Input placeholder'],['assistant.chips','Quick questions, one per line','textarea'],['assistant.fallback','Fallback reply','textarea']])+'<div class="card">'+arrayEditor('layout.assistant.rules','FAQ responses',[{key:'keywords',label:'Keywords, comma separated'},{key:'reply',label:'Reply',type:'textarea'}],x=>x.keywords)+'</div>'}
+const renderers={layout:renderLayoutV2,navigation:renderNavV2,chapters:renderChaptersV2,projects:renderProjects,awards:renderAwards,team:renderTeam,clients:renderClients,contact:renderContactV2,sections:renderSectionsV2,assistant:renderAssistantV2,advanced:renderAdvanced};
 
   function renderTabs(){ $('#tabs').innerHTML=tabs.map(([id,label])=>`<button class="tab ${id===activeTab?'active':''}" data-tab="${id}">${esc(label)}</button>`).join(''); }
   function renderEditor(){
@@ -156,6 +166,7 @@
 
   async function uploadImage(path,file){
     if(!file)return;
+    if(!/^image\/(png|jpeg|webp|gif|avif)$/i.test(file.type)||file.size>10*1024*1024){toast('Choose a PNG, JPG, WebP, GIF or AVIF under 10 MB.','bad');return;}
     const ext=(file.name.split('.').pop()||'jpg').replace(/[^a-z0-9]/gi,'').toLowerCase();
     const name=`${Date.now()}-${crypto.randomUUID?.()||Math.random().toString(36).slice(2)}.${ext}`;
     toast('Uploading…');

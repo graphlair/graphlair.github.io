@@ -725,3 +725,168 @@ window.GRAPHLAIR_DEFAULT_CONTENT = {
     }
   ]
 };
+
+window.GRAPHLAIR_DEFAULT_CONTENT.layout = {
+  "navigation": [
+    {
+      "label": "Awards & Recognition",
+      "href": "#awards"
+    },
+    {
+      "label": "Work",
+      "href": "#work"
+    },
+    {
+      "label": "Clients",
+      "href": "#clients"
+    },
+    {
+      "label": "Team",
+      "href": "#team"
+    }
+  ],
+  "navCta": {
+    "label": "Start a project",
+    "href": "#contact"
+  },
+  "sections": [
+    {
+      "id": "awards",
+      "label": "Awards & Recognition",
+      "visible": true
+    },
+    {
+      "id": "work",
+      "label": "Work",
+      "visible": true
+    },
+    {
+      "id": "clients",
+      "label": "Clients",
+      "visible": true
+    },
+    {
+      "id": "team",
+      "label": "Team",
+      "visible": true
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "visible": true
+    }
+  ],
+  "heroVisible": true,
+  "marqueeVisible": true,
+  "headerLogo": "",
+  "brandMain": "GRAPH",
+  "brandAccent": "LAIR",
+  "accent": "#99ff1f",
+  "loaderText": "Building the lair",
+  "chapters": [
+    {
+      "title": "Graphic spells from the lair.",
+      "description": "Graphlair is a creative and technology studio in Dhaka. Scroll to open the lid.",
+      "items": "",
+      "primaryLabel": "Start a project",
+      "primaryLink": "#contact",
+      "secondaryLabel": "See the work",
+      "secondaryLink": "#work"
+    },
+    {
+      "title": "Strategy",
+      "description": "Positioning and direction before a single pixel.",
+      "items": "Brand positioning\nAudience and market read\nCreative direction",
+      "cardSubtitle": "Positioning and direction"
+    },
+    {
+      "title": "Identity",
+      "description": "Logos, type, colour and motion as one visual language.",
+      "items": "Logo and mark systems\nTypography and colour\nMotion and guidelines",
+      "cardSubtitle": "One visual language"
+    },
+    {
+      "title": "Digital",
+      "description": "Websites, UI/UX and IT solutions built to be recognised.",
+      "items": "Websites and web apps\nUI/UX design\nIT solutions",
+      "cardSubtitle": "Sites, apps, interfaces"
+    },
+    {
+      "title": "Experience",
+      "description": "Creative technology and interaction that rewards attention.",
+      "items": "Interactive and 3D\nMotion and campaigns\nInstallations and demos",
+      "cardSubtitle": "Creative technology"
+    },
+    {
+      "title": "Ready when you are.",
+      "description": "Tell us what you’re building. We’ll tell you how we’d make it unforgettable.",
+      "primaryLabel": "Start a project",
+      "primaryLink": "#contact"
+    }
+  ],
+  "marquee": "Strategy\nIdentity\nDigital\nExperience",
+  "screen": {
+    "top": "Graphlair",
+    "line1": "Graphic spells",
+    "line2": "from the lair.",
+    "subtitle": "Creative + technology studio",
+    "phoneTitle": "Graphlair",
+    "phoneText": "New idea unlocked",
+    "cardLabel": "EXPLORE"
+  },
+  "awardsTitle": "Awards & Recognition.",
+  "awardsIntro": "Recognitions and milestones from the lair.",
+  "workTitle": "Projects worth stopping for.",
+  "clientsTitle": "Brands we have built for.",
+  "clientsIntro": "Companies that trusted the lair with their identity, product and story.",
+  "teamTitle": "Different minds. One standard.",
+  "teamIntro": "Hover or tap a name to open their file.",
+  "profileLabel": "View more details",
+  "contactTitle": "Let’s make something memorable.",
+  "formTitle": "Start a project",
+  "nameLabel": "Name",
+  "emailLabel": "Email",
+  "companyLabel": "Company / Project",
+  "messageLabel": "What are we building?",
+  "submitLabel": "Send enquiry ↗",
+  "successMessage": "Thanks — your project enquiry reached Graphlair.",
+  "errorMessage": "Could not send right now. Please try again.",
+  "footerLeft": "Graphlair, graphic spells from the lair. Dhaka, Bangladesh.",
+  "footerRight": "© 2026 Graphlair",
+  "customSections": [],
+  "assistant": {
+    "label": "AI Assistant",
+    "name": "Graphlair Assistant",
+    "status": "Automated FAQ · instant replies",
+    "greeting": "Hey 👋 I’m Graphlair’s automated assistant. Ask about our services, projects or contact.",
+    "placeholder": "Ask a question…",
+    "chips": "Brand identity\nWebsite / app\nMotion & 3D\nStart a project",
+    "fallback": "I can help with services, pricing enquiries and starting a project. For anything else, use the project enquiry form.",
+    "rules": [
+      {
+        "keywords": "hello,hi,hey,হ্যালো",
+        "reply": "Hello! How can I help you with Graphlair today?"
+      },
+      {
+        "keywords": "brand,logo,identity,branding",
+        "reply": "We work on brand positioning, logo systems, typography, visual identity and brand guidelines."
+      },
+      {
+        "keywords": "website,web,app,ui,ux",
+        "reply": "We design websites, interfaces and digital experiences. Share your project requirements in our enquiry form."
+      },
+      {
+        "keywords": "motion,3d,animation",
+        "reply": "We work on motion, creative technology and interactive experiences."
+      },
+      {
+        "keywords": "price,budget,cost,quote,pricing",
+        "reply": "Pricing depends on the scope and timeline. Start a project to request a tailored quote."
+      },
+      {
+        "keywords": "contact,project,hire,start,email",
+        "reply": "Use the Start a project form. Your enquiry goes directly to Graphlair’s team."
+      }
+    ]
+  }
+};

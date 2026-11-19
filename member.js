@@ -63,7 +63,8 @@
     const slug = document.body.dataset.memberSlug || location.pathname.split('/').filter(Boolean).pop() || '';
     const members = content.team?.members || [];
 
-    const member = members.find(m => normalizeLink(m.link) === slug)
+    const requested = new URLSearchParams(location.search).get('name');
+    const member = (requested ? members.find(m=>m.name===requested) : undefined) || members.find(m => normalizeLink(m.link) === slug)
       || members.find(m => m.name === known[slug])
       || members.find(m => String(m.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') === slug);
 
@@ -103,7 +104,7 @@
           <div class="profile-main">
             <div class="role">${escapeHtml(member.role || '')}</div>
             <h1>${escapeHtml(member.name || '')}</h1>
-            <p>${escapeHtml(member.bio || '')}</p>
+            <p>${escapeHtml(member.fullBio || member.bio || '')}</p>${member.responsibilities?`<p style="white-space:pre-line">${escapeHtml(member.responsibilities)}</p>`:''}<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:20px">${[['Website',member.website],['LinkedIn',member.linkedin],['GitHub',member.github]].filter(([,u])=>/^https?:\/\//i.test(u||'')).map(([label,u])=>`<a href="${escapeHtml(u)}" rel="noopener noreferrer" target="_blank">${label} ↗</a>`).join('')}</div>
           </div>
 
           <div class="profile-bottom">
