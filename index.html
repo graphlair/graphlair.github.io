@@ -131,6 +131,7 @@ header nav{gap:clamp(12px,1.7vw,30px)}.tp:not(.on) .tc{pointer-events:none;visib
 .wk .project-detail{padding:0 0 15px;color:var(--mut);font-size:14px}.wk .project-image{max-width:240px;max-height:120px}
 @media(max-width:1050px){.menu-toggle{display:block;color:var(--lm);font-size:14px}.menu-open nav{display:flex;position:absolute;top:100%;left:0;right:0;background:#080808;padding:22px 5vw;flex-direction:column;align-items:stretch}.menu-open nav a:not(.pill){display:block}header:not(.menu-open) nav{display:none}}
 @media(max-width:820px){.tp.on{height:550px}}
+header{z-index:30}header nav{gap:clamp(9px,1.25vw,24px)}header nav a{white-space:nowrap}header nav a:not(.pill){font-size:13px} @media(max-width:1050px){header .lg{max-width:70vw}header .menu-toggle{display:block;margin-left:auto}header.menu-open nav{display:flex!important}header:not(.menu-open) nav{display:none}}
 </style>
 </head>
 <body>
@@ -148,7 +149,7 @@ header nav{gap:clamp(12px,1.7vw,30px)}.tp:not(.on) .tc{pointer-events:none;visib
 <div class="ch"><h2 class="d">Experience</h2><p>Creative technology and interaction that rewards attention.</p><ul><li>Interactive and 3D</li><li>Motion and campaigns</li><li>Installations and demos</li></ul></div>
 <div class="ch"><h2 class="d">Ready when you are.</h2><p>Tell us what you’re building. We’ll tell you how we’d make it unforgettable.</p><div class="row"><a class="pill" href="#contact">Start a project</a></div></div>
 </div></div>
-<div class="mq" aria-hidden="true"><div class="mr d"></div><div class="mr d l"></div></div>
+<div class="mq" aria-hidden="true"><div class="mr d"><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span></div><div class="mr d l"><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span><span>Strategy</span><span>Identity</span><span>Digital</span><span>Experience</span></div></div>
 <section id="awards"><div class="w"><div class="two"><h3 class="d">Awards &amp; Recognition.</h3><p class="lead">We turn a clear idea into a visual language and a digital product people remember, from the first positioning session to the last pixel.</p></div>
 <div class="awd"><article style="--k:0"><i class="sh"></i><svg viewBox="0 0 64 64"><use href="#t1"/></svg><div><small class="d">01</small><h5>Innovation World Cup® Recognition</h5></div><span class="yr d" data-n="2026">2026</span></article><article style="--k:1"><i class="sh"></i><svg viewBox="0 0 64 64"><use href="#t2"/></svg><div><small class="d">02</small><h5>Featured Creative Work</h5></div><span class="yr d" data-n="2026">2026</span></article><article style="--k:2"><i class="sh"></i><svg viewBox="0 0 64 64"><use href="#t3"/></svg><div><small class="d">03</small><h5>Studio Milestone</h5></div><span class="yr d" data-n="2026">2026</span></article></div></div></section>
 <section id="work"><div class="w"><h3 class="d">Projects worth stopping for.</h3>
@@ -161,11 +162,17 @@ header nav{gap:clamp(12px,1.7vw,30px)}.tp:not(.on) .tc{pointer-events:none;visib
 <button id="cb" class="d" aria-expanded="false" aria-controls="cp"><i></i>AI Assistant</button>
 <div id="cp"><div class="chh"><span class="av d">G</span><div><b>Graphlair</b><small>Online · replies fast</small></div><button id="cx" aria-label="Close">×</button></div><div id="cm"><p class="bb">Hey 👋 What are we building together?</p></div><div class="chips"><button>Brand identity</button><button>Website / app</button><button>Motion &amp; 3D</button><button>Something else</button></div><div class="cin"><input id="ci" placeholder="Write your message…" aria-label="Message"><button id="cs" aria-label="Send">→</button></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4"></script>
-<script src="/config.js"></script><script src="/default-content.js?v=20261119b"></script><script src="/layout.js?v=20261119b"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="/config.js"></script><script src="/default-content.js?v=20261119b"></script><script src="/layout.js?v=20261119c"></script>
 <script>
-(async()=>{const C=await window.GraphLayout.start();
-try{
+(async()=>{
+const defaults=window.GRAPHLAIR_DEFAULT_CONTENT?.layout;
+let C=defaults;
+const threeReady=(async()=>{for(const url of ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js','https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js','https://unpkg.com/three@0.128.0/build/three.min.js']){if(window.THREE)return;try{await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=url;script.onload=resolve;script.onerror=reject;document.head.append(script);setTimeout(()=>{if(!window.THREE){script.remove();reject(Error('Three.js timeout'))}},8000)});if(window.THREE)return}catch(e){console.warn('Three.js CDN retry',url)}}throw Error('Three.js could not load')})();
+threeReady.catch(()=>{});
+try{if(window.GraphLayout)C=await window.GraphLayout.start()||defaults}catch(err){console.error('[Graphlair content]',err)}
+const mr=[...document.querySelectorAll('.mr')];for(const row of mr)if(!row.children.length){for(let j=0;j<4;j++)for(const word of ['Strategy','Identity','Digital','Experience']){const span=document.createElement('span');span.textContent=word;row.append(span)}}
+let off=0,ly=scrollY;function motion(){requestAnimationFrame(motion);off+=.7+Math.min(60,Math.abs(scrollY-ly))*.6;ly=scrollY;mr.forEach((row,k)=>{const w=Math.max(1,row.scrollWidth/2);row.style.transform='translateX('+(k?-w+off%w:-(off%w))+'px)'});document.querySelector('#pg').style.transform='scaleX('+scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)+')'}motion();
+try{await threeReady;
 const $=s=>document.querySelector(s),ss=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x)},L=THREE.MathUtils.lerp;
 let sm=0,mx=0,t0=null,W=1,H=1,fx=0,fy=0,mxp=0,myp=0;const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 (function(){const pc=$('#pc'),ld=$('#ld'),T=reduce?200:2300,s=performance.now();
@@ -279,7 +286,7 @@ ps.rotation.x=-Math.PI/2;ps.position.y=.0765;ph.add(ps);
 document.fonts.ready.then(()=>texs.forEach(t=>t.paint()));
 
 const chs=[...document.querySelectorAll('.ch')],sn=$('#sn'),sni=[...sn.children],stage=$('#stage'),V=new THREE.Vector3(),LK=new THREE.Vector3();
-let off=0,ly=0;const mrs=[...document.querySelectorAll('.mr')];
+
 function frame(){requestAnimationFrame(frame);const t=performance.now()/1000,r=stage.getBoundingClientRect(),p=Math.min(1,Math.max(0,-r.top/Math.max(1,stage.offsetHeight-innerHeight)));sm+=(p-sm)*.06;
  const I=t0===null?0:Math.min(1,Math.max(0,(performance.now()-t0)/2200)),e=1-Math.pow(1-I,3);
  const op=ss(.04,.26,sm),k1=ss(.03,.28,sm),k2=ss(.3,.9,sm);
@@ -294,9 +301,8 @@ function frame(){requestAnimationFrame(frame);const t=performance.now()/1000,r=s
   c.g.scale.setScalar(Math.max(.001,(.2+.8*em)*(1+c.a*.16)));c.g.rotation.y=-(i-1.5)*.1*(1-c.a)*em;
   c.m.uniforms.uR.value=em;c.m.uniforms.uA.value=c.a;c.m.uniforms.uT.value=t;c.gl.material.opacity=em*(.08+.5*c.a)});
  chs.forEach((c,i)=>c.classList.toggle('on',i===ci&&I>.3));sn.classList.toggle('on',act>=0);sni.forEach((l,i)=>l.classList.toggle('on',i===act));
- off+=.7+Math.min(60,Math.abs(scrollY-ly))*.6;ly=scrollY;mrs.forEach((r,k)=>{const h=Math.max(1,r.scrollWidth/2);r.style.transform=`translateX(${k?-h+off%h:-(off%h)}px)`});
- $('#pg').style.transform=`scaleX(${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})`;R.render(S,cam)}
-frame();
+ R.render(S,cam)}
+frame();document.documentElement.dataset.graphlair3d='running';
 
  }catch(e){console.warn("3D fallback",e);document.querySelector('#ld')?.remove();document.querySelector('#stage').classList.add('static-stage');}
 })().catch(e=>{console.error(e);document.querySelector('#ld')?.remove()});
