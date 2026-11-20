@@ -24,7 +24,12 @@
     'alimul-firoz':'Alimul Firoz',
     'shuria-shimu':'Shuria Akter Shimu',
     'marian-tanjum':'Tanjum Nahar Maria',
-    'faiza':'Faiza Naba'
+    'faiza':'Faiza Naba',
+    'hadi':'Syed Al Hadi',
+    'taj':'Tawhidul Islam Taj',
+    'firoz':'Alimul Firoz',
+    'shuria':'Shuria Akter Shimu',
+    'maria':'Tanjum Nahar Maria'
   };
 
   function normalizeLink(v='') {
@@ -64,8 +69,9 @@
     const members = content.team?.members || [];
 
     const requested = new URLSearchParams(location.search).get('name');
-    const member = (requested ? members.find(m=>m.name===requested) : undefined) || members.find(m => normalizeLink(m.link) === slug)
-      || members.find(m => m.name === known[slug])
+    const sameName = (a,b) => String(a || '').trim().toLowerCase() === String(b || '').trim().toLowerCase();
+    const member = (requested ? members.find(m=>sameName(m.name,requested)) : undefined) || members.find(m => normalizeLink(m.link) === slug)
+      || members.find(m => known[slug] && sameName(m.name, known[slug]))
       || members.find(m => String(m.name || '').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') === slug);
 
     if (!member) {
