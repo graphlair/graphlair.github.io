@@ -37,6 +37,9 @@
 
 
   function memberProfileUrl(member={}) {
+    const aliases = {'syed al hadi':'/hadi/','tawhidul islam taj':'/taj/','alimul firoz':'/firoz/','shuria akter shimu':'/shuria/','tanjum nahar maria':'/maria/','nafis tamim':'/nafis/','faiza naba':'/faiza/'};
+    const alias = aliases[String(member.name || '').trim().toLowerCase()];
+    if (alias) return alias;
     const raw = String(member.link || '').trim();
     if (raw && raw !== '#' && !/^javascript:/i.test(raw)) {
       const custom = safeUrl(raw, '');
